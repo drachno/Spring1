@@ -26,7 +26,7 @@ public class PersonController {
         return new ResponseEntity<List<Person>>(list, HttpStatus.OK);
     }
 
-    @GetMapping("{pid}")
+    @GetMapping(path = "/{pid}", produces = "application/json")
     public ResponseEntity<Person> getPersonByPid(@PathVariable("pid") Long pid) {
         try {
             Person person = personService.getById(pid);
@@ -46,7 +46,7 @@ public class PersonController {
         }
     }
 
-    @DeleteMapping("{pid}")
+    @DeleteMapping("/{pid}")
     public ResponseEntity<Void> deletePerson(@PathVariable("pid") Long pid) throws PersonNotFoundException {
         try {
             personService.deleteById(pid);
@@ -56,7 +56,7 @@ public class PersonController {
         }
     }
 
-    @PutMapping("{pid}")
+    @PutMapping(path = "/{pid}", consumes = "application/json")
     public ResponseEntity<Void> updatePerson(@RequestBody Person person, @PathVariable("pid") long pid) throws PersonNotFoundException {
         try {
             personService.updatePerson(person, pid);
