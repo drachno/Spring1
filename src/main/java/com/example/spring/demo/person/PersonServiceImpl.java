@@ -26,13 +26,15 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void addPerson(Person person) throws PersonWIthThisPIDAlreadyExists {
+        if (personRepository.existsById(person.getPid())) {
+            throw new PersonWIthThisPIDAlreadyExists(person.getPid());
+        }
         personRepository.save(person);
     }
 
     @Override
     public Person getById(long pid) throws PersonNotFoundException {
-        Person person = personRepository.findById(pid).orElseThrow(() -> new PersonNotFoundException(pid));
-        return person;
+        return personRepository.findById(pid).orElseThrow(() -> new PersonNotFoundException(pid));
     }
 
     @Override
@@ -49,10 +51,16 @@ public class PersonServiceImpl implements PersonService {
         personRepository.findById(pid).map(person -> {
             person.setName(newPerson.getName());
             person.setSurname(newPerson.getSurname());
-            person.setMiddleNAme(newPerson.getMiddleNAme());
+            person.setMiddleName(newPerson.getMiddleName());
             person.setEmail(newPerson.getEmail());
             person.setPhone(newPerson.getPhone());
             return personRepository.save(person);
         }).orElseThrow(() -> new PersonNotFoundException(pid));
+    }
+
+    @Override
+    public void saveAndFlush(Person person) {
+        personRepository.saveAndFlush(person);
+
     }
 }

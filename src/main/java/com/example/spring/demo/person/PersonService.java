@@ -16,4 +16,7 @@ public interface PersonService {
     void addPerson(Person person) throws PersonWIthThisPIDAlreadyExists;
 
     void updatePerson(Person person, long pid) throws PersonNotFoundException;
+
+    void saveAndFlush(Person person);
+
 }

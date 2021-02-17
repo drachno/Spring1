@@ -1,15 +1,17 @@
 package com.example.spring.demo.person;
 
 
+import com.example.spring.demo.group.Group;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Data
@@ -29,7 +31,7 @@ public class Person {
     @NotNull
     @NotBlank
     @Column(name = "middle_name")
-    private String middleNAme;
+    private String middleName;
 
     @NotNull
     @NotBlank
@@ -39,6 +41,13 @@ public class Person {
     private String email;
 
     private String phone;
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JoinTable(name = "person_group", joinColumns = @JoinColumn(name = "pid", referencedColumnName = "pid"), inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private Set<Group> groups;
 
 
 }
