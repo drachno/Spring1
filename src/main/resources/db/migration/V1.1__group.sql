@@ -18,3 +18,5 @@ insert into "group" (name, details) values ('Test Group', 'This is test group');
 
 --Person group
 insert into person_group (pid, group_id) values (38202020577, 1);
+
+

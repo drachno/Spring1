@@ -1,6 +1,7 @@
 package com.example.spring.demo.group;
 
 import com.example.spring.demo.person.Person;
+import com.example.spring.demo.pet.Pet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -37,4 +38,10 @@ public class Group {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Person> persons;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "group")
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Pet pet;
 }
